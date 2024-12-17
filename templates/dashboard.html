@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <span>Финансовый Анализ</span>
+        <a href="/logout">Выйти</a>
+    </div>
+
+    <div class="container">
+        <h1>Добро пожаловать, {{ user_name or user_email }}</h1>
+
+        <h2>Ваши последние действия</h2>
+        {% if recent_actions %}
+            <ul>
+                {% for action in recent_actions %}
+                <li>
+                    <a href="{{ url_for('plot', ticker=action['ticker'], period='1m') }}">
+                        График {{ action['ticker'] }} за месяц
+                    </a>
+                    <small>(Последний просмотр: {{ action['last_action'] }})</small>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>У вас пока нет действий. Начните с <a href="{{ url_for('search') }}">поиска актива</a>.</p>
+        {% endif %}
+
+
+        <h2>Уведомления</h2>
+        <ul>
+            {% for notification in notifications %}
+            <li class="{{ 'unread' if notification.status == 'pending' else 'read' }}">
+                <span>
+                    <strong>{{ notification.message }}</strong>
+                    <small>({{ notification.created_at }})</small>
+                </span>
+                {% if notification.status == 'pending' %}
+                <form action="{{ url_for('mark_notification_as_read', notification_id=notification.notification_id) }}" method="post" style="display:inline;">
+                    <button type="submit">Отметить как прочитанное</button>
+                </form>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Подписки на активы</h2>
+        <ul class="subscription-list">
+            {% for subscription in subscriptions %}
+            <li>
+                <strong>{{ subscription.ticker }}</strong>
+                {% if subscription.condition_type == 'price_above' %}
+                — Оповестить, если цена выше {{ subscription.condition_value }}
+                {% elif subscription.condition_type == 'price_below' %}
+                — Оповестить, если цена ниже {{ subscription.condition_value }}
+                {% endif %}
+                <form action="{{ url_for('unsubscribe', subscription_id=subscription.subscription_id) }}" method="post" style="display:inline;">
+                    <button type="submit">Удалить подписку</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+
+        {% if session.get('is_admin') %}
+        <a href="{{ url_for('admin_panel') }}">Перейти в Административную панель</a>
+        {% endif %}
+
+        <h2>Навигация</h2>
+        <a href="/search" class="btn">Поиск актива</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Добро пожаловать на сайт анализа данных!</h1>
+    <nav>
+        <a href="{{ url_for('register') }}">Регистрация</a> |
+        <a href="{{ url_for('login') }}">Авторизация</a> |
+        <a href="{{ url_for('plot') }}">Посмотреть график</a>
+        <p><a href="{{ url_for('search') }}">Поиск актива</a></p>
+
+    </nav>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

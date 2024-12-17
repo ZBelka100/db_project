@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск актива</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Поиск актива</h1>
+    <form action="{{ url_for('search') }}" method="post">
+        <input type="text" name="query" placeholder="Введите название актива" required>
+        <button type="submit">Найти</button>
+    </form>
+
+    {% if results %}
+        <h2>Результаты поиска:</h2>
+        <ul>
+        {% for result in results %}
+            <li>
+                {{ result.name }} ({{ result.ticker }})
+                <a href="{{ url_for('plot', ticker=result.ticker, period='1d') }}">День</a> |
+                <a href="{{ url_for('plot', ticker=result.ticker, period='5d') }}">5 Дней</a> |
+                <a href="{{ url_for('plot', ticker=result.ticker, period='1m') }}">Месяц</a> |
+                <a href="{{ url_for('plot', ticker=result.ticker, period='3m') }}">3 Месяца</a> |
+                <a href="{{ url_for('plot', ticker=result.ticker, period='1y') }}">Год</a> |
+                <a href="{{ url_for('technical_analysis', ticker=result.ticker) }}">Технический анализ</a>
+                
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

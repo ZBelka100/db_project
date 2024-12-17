@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Административная панель</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <span>Административная панель</span>
+        <a href="{{ url_for('dashboard') }}">Вернуться на главную</a>
+    </div>
+    <div class="container">
+        <h1>Административная панель</h1>
+        
+        <h2>Список пользователей</h2>
+        <form action="{{ url_for('admin_panel') }}" method="post">
+            <input type="hidden" name="action" value="make_admin">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Email</th>
+                        <th>Роль</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.user_id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>
+                            {% if user.role != 'Admin' %}
+                            <button type="submit" name="user_id" value="{{ user.user_id }}">Назначить администратором</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+
+        <h2>Резервное копирование базы данных</h2>
+        <form action="{{ url_for('admin_panel') }}" method="post">
+            <input type="hidden" name="action" value="backup_db">
+            <button type="submit">Создать резервную копию</button>
+        </form>
+
+    </div>
+</body>
+</html>

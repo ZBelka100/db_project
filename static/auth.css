@@ -1,0 +1,92 @@
+/* auth.css */
+
+/* Общий фон */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #f4f4f4, #eaeaea); /* Нейтральный светлый градиент */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #343a40;
+}
+
+/* Централизованный контейнер */
+.container {
+    background: #ffffff;
+    color: #343a40;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Заголовок */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #495057;
+}
+
+/* Поля ввода */
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* Кнопка отправки */
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+
+.toggle-link {
+    display: inline-block;
+    background-color: #f0ad4e;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-link:hover {
+    background-color: #ec971f;
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: red;
+}

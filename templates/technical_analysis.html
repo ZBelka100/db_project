@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Технический анализ {{ ticker }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Технический анализ для {{ ticker }}</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>SMA (20)</th>
+                <th>RSI</th>
+                <th>MACD</th>
+                <th>ADX</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in indicators %}
+            <tr>
+                <td>{{ row.date }}</td>
+                <td>{{ row.sma_20 }}</td>
+                <td>{{ row.rsi }}</td>
+                <td>{{ row.macd }}</td>
+                <td>{{ row.adx }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Подписаться на {{ ticker }}</h2>
+    <form action="{{ url_for('subscribe', ticker=ticker) }}" method="post">
+        <label for="condition_type">Тип условия:</label>
+        <select name="condition_type" id="condition_type">
+            <option value="price_above">Цена выше</option>
+            <option value="price_below">Цена ниже</option>
+        </select>
+
+        <label for="condition_value">Уровень цены:</label>
+        <input type="number" step="0.01" name="condition_value" id="condition_value" required>
+
+        <button type="submit">Подписаться</button>
+    </form>
+
+    <a href="/search" class="btn">Вернуться к поиску активов</a>
+
+    <p><a href="{{ url_for('dashboard') }}">Вернуться на панель управления</a></p>
+</body>
+</html>

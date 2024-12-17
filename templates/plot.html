@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>График {{ ticker }} за {{ period }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+        }
+        .graph {
+            width: 100%;
+            height: 75vh; 
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .buttons form {
+            margin: 0 5px;
+        }
+        .buttons button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>График цены открытия для {{ ticker }} за период {{ period }}</h1>
+        <div class="graph">{{ graph_html|safe }}</div>
+
+        <div class="buttons">
+            <form method="GET" action="{{ url_for('plot', ticker=ticker, period='1d') }}">
+                <button type="submit">1 день</button>
+            </form>
+            <form method="GET" action="{{ url_for('plot', ticker=ticker, period='5d') }}">
+                <button type="submit">5 дней</button>
+            </form>
+            <form method="GET" action="{{ url_for('plot', ticker=ticker, period='1m') }}">
+                <button type="submit">1 месяц</button>
+            </form>
+            <form method="GET" action="{{ url_for('plot', ticker=ticker, period='3m') }}">
+                <button type="submit">3 месяца</button>
+            </form>
+            <form method="GET" action="{{ url_for('plot', ticker=ticker, period='1y') }}">
+                <button type="submit">1 год</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
